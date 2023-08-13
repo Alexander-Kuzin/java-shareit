@@ -1,15 +1,17 @@
 package ru.practicum.shareit.exceptions;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+import java.util.Map;
 
 @Slf4j
 @RestControllerAdvice
@@ -22,13 +24,6 @@ public class ErrorHandler {
         return new ErrorResponse("Request entity data was not found", e.getMessage());
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleInternalExceptions(final Throwable e) {
-        log.error("Response status 500 Internal server error {}", e.getMessage(), e);
-        return new ErrorResponse("Internal server error", e.getMessage());
-    }
-
     @ExceptionHandler(EntityAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleEntityAlreadyExistException(final EntityAlreadyExistException e) {
@@ -36,17 +31,25 @@ public class ErrorHandler {
         return new ErrorResponse("Entity error", e.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+    public Map<String, String> handleConstraintViolationException(ConstraintViolationException e) {
         log.error("Response status 400 Bad request {}", e.getMessage(), e);
-        return new ErrorResponse("Bad request data", e.getMessage());
+        return Map.of("error", e.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessageTemplate)
+                .findFirst().orElse("No message"));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({MethodArgumentNotValidException.class,
+                       MethodArgumentException.class,
+                       ServletRequestBindingException.class,
+                       ValidationException.class,
+                       ActionNotAvailableException.class,
+                       NotValidDateException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+    public Map<String, String> handleThrowable(final RuntimeException e) {
         log.error("Response status 400 Bad request {}", e.getMessage(), e);
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return Map.of("error", e.getMessage());
     }
 }

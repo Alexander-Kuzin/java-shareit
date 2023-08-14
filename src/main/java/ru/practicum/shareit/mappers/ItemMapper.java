@@ -16,7 +16,7 @@ import static ru.practicum.shareit.utilities.Constants.*;
 
 @UtilityClass
 public class ItemMapper {
-    public static GetItemDto toGetItemDtoFromItem(Item item) {
+    public GetItemDto toGetItemDtoFromItem(Item item) {
         SortedSet<GetCommentDto> comments = new TreeSet<>(orderByCreatedDesc);
 
         if (item.getComments() != null) {
@@ -31,40 +31,43 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
                 .comments(comments)
                 .build();
     }
 
-    public static GetItemDto toGetItemWIthBookingDtoFromItem(Item item) {
+    public GetItemDto toGetItemWIthBookingDtoFromItem(Item item) {
         LocalDateTime currentTime = LocalDateTime.now();
 
         GetItemDto getItemDto = toGetItemDtoFromItem(item);
 
         Set<Booking> bookings = item.getBookings();
 
-        Booking lastBooking = bookings
-                .stream()
-                .sorted(orderByStartDateDesc)
-                .filter(t -> t.getStartDate().isBefore(currentTime) &&
-                        t.getStatus().equals(Status.APPROVED))
-                .findFirst()
-                .orElse(null);
+        if (bookings != null) {
+            Booking lastBooking = bookings
+                    .stream()
+                    .sorted(orderByStartDateDesc)
+                    .filter(t -> t.getStartDate().isBefore(currentTime) &&
+                            t.getStatus().equals(Status.APPROVED))
+                    .findFirst()
+                    .orElse(null);
 
-        Booking nextBooking = bookings
-                .stream()
-                .sorted(orderByStartDateAsc)
-                .filter(t -> t.getStartDate().isAfter(currentTime) &&
-                        t.getStatus().equals(Status.APPROVED))
-                .findFirst()
-                .orElse(null);
+            Booking nextBooking = bookings
+                    .stream()
+                    .sorted(orderByStartDateAsc)
+                    .filter(t -> t.getStartDate().isAfter(currentTime) &&
+                            t.getStatus().equals(Status.APPROVED))
+                    .findFirst()
+                    .orElse(null);
 
-        getItemDto.setLastBooking(BookingMapper.toGetItemBookingDtoFromBooking(lastBooking));
-        getItemDto.setNextBooking(BookingMapper.toGetItemBookingDtoFromBooking(nextBooking));
+            getItemDto.setLastBooking(BookingMapper.toGetBookingForItemDtoFromBooking(lastBooking));
+            getItemDto.setNextBooking(BookingMapper.toGetBookingForItemDtoFromBooking(nextBooking));
+        }
 
         return getItemDto;
     }
 
-    public static Item toGetItemFromCreateUpdateItemDto(AddOrUpdateItemDto addOrUpdateItemDto) {
+    public Item toItemFromAddOrUpdateItemDto(AddOrUpdateItemDto addOrUpdateItemDto) {
         return Item.builder()
                 .name(addOrUpdateItemDto.getName())
                 .description(addOrUpdateItemDto.getDescription())
@@ -72,10 +75,20 @@ public class ItemMapper {
                 .build();
     }
 
-    public static GetBookingForItemDto toGetBookingDtoFromItem(Item item) {
+    public GetBookingForItemDto toGetBookingDtoFromItem(Item item) {
         return GetBookingForItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
+                .build();
+    }
+
+    public GetItemForGetItemRequestDto toGetItemForGetItemRequestDtoFromItem(Item item) {
+        return GetItemForGetItemRequestDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
                 .build();
     }
 }

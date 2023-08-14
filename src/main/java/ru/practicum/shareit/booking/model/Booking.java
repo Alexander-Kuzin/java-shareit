@@ -7,13 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
+
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "bookings", schema = "public")
+@Table(name = "bookings")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)

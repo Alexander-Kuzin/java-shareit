@@ -1,9 +1,12 @@
 package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.lang3.StringUtils;
 
+import ru.practicum.shareit.booking.model.Status;
 import ru.practicum.shareit.exceptions.EntityNotFoundException;
 import ru.practicum.shareit.exceptions.MethodArgumentException;
 import ru.practicum.shareit.item.dto.*;
@@ -12,12 +15,17 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.mappers.CommentMapper;
 import ru.practicum.shareit.mappers.ItemMapper;
 
+import ru.practicum.shareit.request.ItemRequestStorage;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.UserStorage;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.utilities.ChunkRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.practicum.shareit.utilities.Constants.SORT_BY_ID_ASC;
@@ -29,19 +37,19 @@ public class ItemServiceImpl implements ItemService {
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
     private final CommentStorage commentStorage;
+    private final ItemRequestStorage requestStorage;
 
     @Transactional(readOnly = true)
     @Override
-    public List<GetItemDto> getAllByUserId(long userId) {
-        List<Item> items = itemStorage.findAllByOwnerIdWithBookings(userId, SORT_BY_ID_ASC);
+    public List<GetItemDto> getAllByUserId(long userId, int from, int size) {
+        Pageable pageable = new ChunkRequest(from, size, SORT_BY_ID_ASC);
+        List<Item> items = itemStorage.findAllByOwnerId(userId, pageable).getContent();
         if (!items.isEmpty() && items.get(0).getOwner().getId() == userId) {
             return items.stream()
                     .map(ItemMapper::toGetItemWIthBookingDtoFromItem)
                     .collect(Collectors.toList());
         } else {
-            return items.stream()
-                    .map(ItemMapper::toGetItemDtoFromItem)
-                    .collect(Collectors.toList());
+            return new ArrayList<>();
         }
     }
 
@@ -50,20 +58,27 @@ public class ItemServiceImpl implements ItemService {
     public GetItemDto getOneById(long userId, long itemId) {
         userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
-        Item item = itemStorage.findByIdWithOwner(itemId).orElseThrow(
+        Item item = itemStorage.findById(itemId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Item with ID %s not found", itemId)));
         if (item.getOwner().getId() == userId) {
             return ItemMapper.toGetItemWIthBookingDtoFromItem(item);
+        } else {
+            return ItemMapper.toGetItemDtoFromItem(item);
         }
-        return ItemMapper.toGetItemDtoFromItem(item);
     }
 
     @Override
-    public GetItemDto create(long userId, AddOrUpdateItemDto addOrUpdateItemDto) {
+    public GetItemDto create(long userId, AddOrUpdateItemDto createUpdateItemDto) {
         User user = userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
-        Item item = ItemMapper.toGetItemFromCreateUpdateItemDto(addOrUpdateItemDto);
+        Item item = ItemMapper.toItemFromAddOrUpdateItemDto(createUpdateItemDto);
         item.setOwner(user);
+        if (createUpdateItemDto.getRequestId() != null) {
+            ItemRequest request = requestStorage.findById(createUpdateItemDto.getRequestId()).orElseThrow(
+                    () -> new EntityNotFoundException(
+                            String.format("Request with ID %s", createUpdateItemDto.getRequestId())));
+            item.setRequest(request);
+        }
         return ItemMapper.toGetItemDtoFromItem(itemStorage.save(item));
     }
 
@@ -71,25 +86,21 @@ public class ItemServiceImpl implements ItemService {
     public GetItemDto update(long userId, long itemId, AddOrUpdateItemDto updateItemDto) {
         User user = userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
-        Item item = itemStorage.findByIdWithOwner(itemId).orElseThrow(
+        Item item = itemStorage.findById(itemId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Item with ID %s", itemId)));
-
         if (!item.getOwner().equals(user)) {
             throw new EntityNotFoundException(
                     String.format("User with ID = %s has no items with ID = %s", user.getId(), item.getId()));
         }
-
-        if (updateItemDto.getName() != null && !updateItemDto.getName().isBlank()) {
+        if (StringUtils.isNotBlank(updateItemDto.getName())) {
             item.setName(updateItemDto.getName());
         }
 
-        if (updateItemDto.getDescription() != null && !updateItemDto.getDescription().isBlank()) {
+        if (StringUtils.isNotBlank(updateItemDto.getDescription())) {
             item.setDescription(updateItemDto.getDescription());
         }
-
-        if (updateItemDto.getAvailable() != null) {
-            item.setAvailable(updateItemDto.getAvailable());
-        }
+        Optional.ofNullable(updateItemDto.getAvailable()).ifPresent(
+                var -> item.setAvailable(updateItemDto.getAvailable())); //fixme
         return ItemMapper.toGetItemDtoFromItem(itemStorage.save(item));
     }
 
@@ -97,7 +108,7 @@ public class ItemServiceImpl implements ItemService {
     public void delete(long userId, long itemId) {
         User user = userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
-        Item item = itemStorage.findByIdWithOwner(itemId).orElseThrow(
+        Item item = itemStorage.findById(itemId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Item with ID %s", itemId)));
         if (!item.getOwner().equals(user)) {
             throw new EntityNotFoundException(
@@ -108,13 +119,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<GetItemDto> search(long userId, String text) {
+    public List<GetItemDto> search(long userId, String text, int from, int size) {
         userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
         if (text.isBlank()) {
             return Collections.emptyList();
         }
-        return itemStorage.search(text, SORT_BY_ID_ASC)
+        Pageable pageable = new ChunkRequest(from, size, SORT_BY_ID_ASC);
+        return itemStorage.search(text, pageable)
+                .getContent()
                 .stream()
                 .map(ItemMapper::toGetItemDtoFromItem)
                 .collect(Collectors.toList());
@@ -124,9 +137,8 @@ public class ItemServiceImpl implements ItemService {
     public GetCommentDto createComment(long userId, long itemId, AddCommentDto commentDto) {
         User user = userStorage.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
-
-        Item item = itemStorage.findByIdWithOwner(itemId).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Item with ID %s", userId)));
+        Item item = itemStorage.findById(itemId).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Item with ID %s", itemId)));
 
         if (isBookingByUser(user, item)) {
             Comment comment = CommentMapper.toCommentFromCreateCommentDto(commentDto);
@@ -135,17 +147,15 @@ public class ItemServiceImpl implements ItemService {
             comment.setAuthor(user);
             comment.setCreated(LocalDateTime.now());
             return CommentMapper.toGetCommentDtoFromComment(commentStorage.save(comment));
-        } else {
-            throw new MethodArgumentException(String.format(
-                    "User ID = %s booking item ID = %s not found", userId, itemId));
         }
+        throw new MethodArgumentException(String.format("User ID = %s did not book item ID = %s", userId, itemId));
     }
 
     private Boolean isBookingByUser(User user, Item item) {
         LocalDateTime currentTime = LocalDateTime.now();
-        return item.getBookings()
-                .stream()
+        return item.getBookings() != null && item.getBookings().stream()
                 .anyMatch(t -> t.getBooker().equals(user)
-                        && t.getEndDate().isBefore(currentTime));
+                        && t.getEndDate().isBefore(currentTime)
+                        && t.getStatus() == Status.APPROVED);
     }
 }

@@ -52,7 +52,7 @@ public class ChunkRequest implements Pageable {
 
     @Override
     public Pageable next() {
-        return null;
+        return this;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ChunkRequest implements Pageable {
 
     @Override
     public Pageable withPage(int pageNumber) {
-        return null;
+        return this;
     }
 
     @Override

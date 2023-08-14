@@ -74,7 +74,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void CreateRequest() {
+    void createRequestTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.save(any(ItemRequest.class)))
@@ -92,7 +92,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithCreateRequestNotFoundUser() {
+    void getExceptionWithCreateRequestNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.save(any(ItemRequest.class)))
@@ -109,7 +109,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetRequestById() {
+    void getRequestById() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -127,7 +127,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithRequestByIdNotFoundUser() {
+    void getExceptionWithRequestByIdNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.findById(anyLong()))
@@ -144,7 +144,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithRequestByIdNotFoundRequest() {
+    void getExceptionWithRequestByIdNotFoundRequest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -161,7 +161,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetAllRequestsByUserId() {
+    void getAllRequestsByUserId() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.getAllByRequester(any(User.class), any(Sort.class)))
@@ -181,7 +181,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetAllRequestsByUserIdNotFoundUser() {
+    void getExceptionWithGetAllRequestsByUserIdNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.getAllByRequester(any(User.class), any(Sort.class)))
@@ -198,7 +198,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetAllRequests() {
+    void getAllRequests() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.getAllByRequesterNot(any(User.class), any(Pageable.class)))
@@ -218,7 +218,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetAllRequestsNotFoundUser() {
+    void getExceptionWithGetAllRequestsNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.getAllByRequesterNot(any(User.class), any(Pageable.class)))

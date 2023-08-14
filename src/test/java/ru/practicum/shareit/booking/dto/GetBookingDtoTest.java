@@ -30,7 +30,7 @@ class GetBookingDtoTest {
 
     @SneakyThrows
     @Test
-    void SerializeTest() {
+    void serializeTest() {
         GetBookingDto dto = GetBookingDto.builder()
                 .id(1L)
                 .start(startTime)
@@ -51,7 +51,7 @@ class GetBookingDtoTest {
 
     @SneakyThrows
     @Test
-    void seserializeTest() {
+    void deserializeTest() {
         String content = "{\"id\":\"1\",\"start\":\"" + startTime + "\",\"end\":\"" + endTime + "\",\"status\":\"" + Status.APPROVED + "\"}";
         ObjectContent<GetBookingDto> result = json.parse(content);
         assertThat(result).isEqualTo(GetBookingDto.builder()

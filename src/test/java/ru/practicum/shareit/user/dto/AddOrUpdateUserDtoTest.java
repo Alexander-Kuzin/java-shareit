@@ -18,7 +18,7 @@ class AddOrUpdateUserDtoTest {
 
     @Test
     @SneakyThrows
-    void SerializeTest() {
+    void serializeTest() {
         AddOrUpdateUserDto dto = AddOrUpdateUserDto.builder()
                 .name("userName")
                 .email("mail@ya.ru")
@@ -32,7 +32,7 @@ class AddOrUpdateUserDtoTest {
 
     @Test
     @SneakyThrows
-    void DeserializeTest() {
+    void deserializeTest() {
         String content = "{\"name\":\"userName\",\"email\":\"mail@ya.ru\"}";
         ObjectContent<AddOrUpdateUserDto> result = json.parse(content);
         assertThat(result).isEqualTo(AddOrUpdateUserDto.builder()

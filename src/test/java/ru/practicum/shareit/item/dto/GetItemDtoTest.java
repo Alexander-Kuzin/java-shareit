@@ -20,7 +20,7 @@ class GetItemDtoTest {
 
     @SneakyThrows
     @Test
-    void Serialize() {
+    void serialize() {
         GetItemDto dto = GetItemDto.builder()
                 .id(1L)
                 .name("itemName")
@@ -49,7 +49,7 @@ class GetItemDtoTest {
 
     @SneakyThrows
     @Test
-    void Deserialize() {
+    void deserialize() {
         String content = "{\"id\":\"1\",\"name\":\"itemName\",\"description\":\"itemDescription\"" +
                 ",\"available\":\"false\"}";
 

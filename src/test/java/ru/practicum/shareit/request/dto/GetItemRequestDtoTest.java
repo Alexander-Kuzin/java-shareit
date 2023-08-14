@@ -27,7 +27,7 @@ class GetItemRequestDtoTest {
 
     @SneakyThrows
     @Test
-    void Serialize() {
+    void serialize() {
         GetItemRequestDto dto = GetItemRequestDto.builder()
                 .id(1L)
                 .description("requestText")
@@ -49,7 +49,7 @@ class GetItemRequestDtoTest {
 
     @SneakyThrows
     @Test
-    void Deserialize() {
+    void deserialize() {
         String content = "{\"id\":\"1\",\"description\":\"requestText\",\"created\":\"" + time + "\"}";
 
         ObjectContent<GetItemRequestDto> result = json.parse(content);

@@ -57,7 +57,7 @@ public class ItemRequestStorageTest {
     }
 
     @Test
-    void CreateRequest() {
+    void createRequestTest() {
         userStorage.save(user);
         requestService.addRequest(user.getId(), requestDto);
 
@@ -70,7 +70,7 @@ public class ItemRequestStorageTest {
     }
 
     @Test
-    void GetRequestById() {
+    void getRequestByIdTest() {
         userStorage.save(user);
         requestService.addRequest(user.getId(), requestDto);
 
@@ -81,7 +81,7 @@ public class ItemRequestStorageTest {
     }
 
     @Test
-    void GetAllRequests() {
+    void getAllRequestsTest() {
         userStorage.save(user);
         userStorage.save(user2);
         AddItemRequestDto requestDto2 = AddItemRequestDto.builder().description("request2").build();
@@ -117,7 +117,7 @@ public class ItemRequestStorageTest {
     }
 
     @Test
-    void GetAllRequestsByUserId() {
+    void getAllRequestsByUserIdTest() {
         userStorage.save(user.toBuilder().build());
         userStorage.save(user2.toBuilder().build());
         AddItemRequestDto requestDto1 = AddItemRequestDto.builder().description("request1").build();

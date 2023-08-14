@@ -152,7 +152,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void CreateItemWithRequest() {
+    void createItemWithRequest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -179,7 +179,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithCreateWithNotFoundUser() {
+    void getExceptionWithCreateWithNotFoundUser() {
         when(userStorage.findById(anyLong())).thenReturn(Optional.empty());
         when(requestStorage.findById(anyLong())).thenReturn(Optional.of(request));
         when(commentStorage.findById(anyLong())).thenReturn(null);
@@ -198,7 +198,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithCreateWithNotFoundRequest() {
+    void getExceptionWithCreateWithNotFoundRequest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -221,7 +221,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithUpdateItemWithNotFoundUser() {
+    void getExceptionWithUpdateItemWithNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.findById(anyLong()))
@@ -247,7 +247,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithUpdateItemWithNotFoundItem() {
+    void getExceptionWithUpdateItemWithNotFoundItem() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -273,7 +273,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithUpdateItemWithNotFoundOwner() {
+    void getExceptionWithUpdateItemWithNotFoundOwner() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user.toBuilder().id(2L).build()));
         when(requestStorage.findById(anyLong()))
@@ -299,7 +299,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void DeleteItem() {
+    void deleteItem() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong()))
@@ -320,7 +320,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithDeleteItemWithNotFoundUser() {
+    void getExceptionWithDeleteItemWithNotFoundUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(requestStorage.findById(anyLong()))
@@ -345,7 +345,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithDeleteItemWithNotFoundItem() {
+    void getExceptionWithDeleteItemWithNotFoundItem() {
         when(userStorage.findById(anyLong())).thenReturn(Optional.of(user));
         when(requestStorage.findById(anyLong())).thenReturn(Optional.of(request));
         when(commentStorage.findById(anyLong())).thenReturn(null);
@@ -366,7 +366,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithDeleteItemWithNotFoundOwner() {
+    void getExceptionWithDeleteItemWithNotFoundOwner() {
         when(userStorage.findById(anyLong())).thenReturn(Optional.of(user.toBuilder().id(2L).build()));
         when(requestStorage.findById(anyLong())).thenReturn(Optional.of(request));
         when(commentStorage.findById(anyLong())).thenReturn(null);
@@ -387,7 +387,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void GetByIdByOwner() {
+    void getByIdByOwner() {
         when(userStorage.findById(anyLong())).thenReturn(Optional.of(user));
         when(itemStorage.findById(anyLong())).thenReturn(Optional.of(item.toBuilder().build()));
 

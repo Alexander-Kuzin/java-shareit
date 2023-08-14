@@ -27,7 +27,7 @@ class GetCommentDtoTest {
 
     @SneakyThrows
     @Test
-    void Serialize() {
+    void serialize() {
         GetCommentDto dto = GetCommentDto.builder()
                 .id(1L)
                 .text("commentText")
@@ -48,7 +48,7 @@ class GetCommentDtoTest {
 
     @SneakyThrows
     @Test
-    void Deserialize() {
+    void deserialize() {
         String content = "{\"id\":\"1\",\"text\":\"commentText\",\"created\":\"" +
                 time +
                 "\",\"authorName\":\"author\"}";

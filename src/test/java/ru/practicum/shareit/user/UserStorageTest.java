@@ -39,7 +39,7 @@ public class UserStorageTest {
     }
 
     @Test
-    void CreateUser() {
+    void createUserTest() {
         userService.create(createUpdateUserDto);
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class);
         User user = query.setParameter("id", 1L).getSingleResult();
@@ -48,7 +48,7 @@ public class UserStorageTest {
     }
 
     @Test
-    void UpdateUser() {
+    void updateUserTest() {
         userService.create(createUpdateUserDto);
         AddOrUpdateUserDto updateUserDto = AddOrUpdateUserDto.builder().name("newName").build();
         userService.update(1L, updateUserDto);
@@ -58,7 +58,7 @@ public class UserStorageTest {
     }
 
     @Test
-    void DeleteById() {
+    void deleteByIdTest() {
         userService.create(createUpdateUserDto);
         assertThat(userService.getAll(0, 20).size(), equalTo(1));
         userService.deleteById(1L);
@@ -66,7 +66,7 @@ public class UserStorageTest {
     }
 
     @Test
-    void GetById() {
+    void getById() {
         userService.create(createUpdateUserDto);
         GetUserDto user = userService.getById(1L);
         assertThat(createUpdateUserDto.getName(), equalTo(user.getName()));
@@ -74,7 +74,7 @@ public class UserStorageTest {
     }
 
     @Test
-    void GetAll() {
+    void getAll() {
         AddOrUpdateUserDto userDto2 = createUpdateUserDto.toBuilder().email("mail2@ya.ru").build();
         AddOrUpdateUserDto userDto3 = createUpdateUserDto.toBuilder().email("mail3@ya.ru").build();
         AddOrUpdateUserDto userDto4 = createUpdateUserDto.toBuilder().email("mail4@ya.ru").build();

@@ -78,7 +78,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void CreateUser() {
+    void createUserTest() {
         when(userStorage.save(any(User.class)))
                 .thenReturn(getUser.toBuilder().build());
 
@@ -92,7 +92,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetAlreadyExistsExceptionCreateUser() {
+    void getAlreadyExistsExceptionCreateUser() {
         when(userStorage.save(any(User.class)))
                 .thenThrow(new DataIntegrityViolationException("error"));
 
@@ -106,7 +106,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetNotFoundExceptionWithUpdate() {
+    void getNotFoundExceptionWithUpdate() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -120,7 +120,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetAlreadyExistsExceptionUpdateUser() {
+    void getAlreadyExistsExceptionUpdateUser() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(getUser.toBuilder().build()));
         when(userStorage.saveAndFlush(any(User.class)))
@@ -136,7 +136,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void UpdateUserName() {
+    void updateUserName() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(getUser.toBuilder().build()));
         when(userStorage.saveAndFlush(any(User.class)))
@@ -152,7 +152,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void UpdateUserEmail() {
+    void updateUserEmail() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(getUser.toBuilder().build()));
         when(userStorage.saveAndFlush(any(User.class)))
@@ -168,7 +168,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetNotFoundExceptionWithDeleteById() {
+    void getNotFoundExceptionWithDeleteById() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -182,7 +182,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void DeleteById() {
+    void deleteById() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(getUser.toBuilder().build()));
         doNothing().when(userStorage).deleteById(anyLong());
@@ -193,7 +193,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetExceptionGetById() {
+    void getExceptionGetById() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -207,7 +207,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetById() {
+    void getById() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(getUser.toBuilder().build()));
 
@@ -221,7 +221,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void GetAll() {
+    void getAll() {
 
         when(userStorage.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(listOfUser));

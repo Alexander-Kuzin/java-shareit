@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateWithoutHeader() throws Exception {
+    void getExceptionWithCreateWithoutHeader() throws Exception {
         mockMvc.perform(post("/items")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -102,7 +103,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateItemWithoutName() throws Exception {
+    void getExceptionWithCreateItemWithoutName() throws Exception {
         String jsonItem = objectMapper.writeValueAsString(itemWithoutName);
 
         mockMvc.perform(post("/items")
@@ -114,7 +115,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateItemWithoutDescription() throws Exception {
+    void getExceptionWithCreateItemWithoutDescription() throws Exception {
         String jsonItem = objectMapper.writeValueAsString(itemWithoutDescription);
 
         mockMvc.perform(post("/items")
@@ -126,7 +127,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateItemWithoutAvailable() throws Exception {
+    void getExceptionWithCreateItemWithoutAvailable() throws Exception {
         String jsonItem = objectMapper.writeValueAsString(itemWithoutAvailable);
 
         mockMvc.perform(post("/items")
@@ -138,7 +139,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void CreateItem() throws Exception {
+    void createItem() throws Exception {
         when(itemService.create(anyLong(), any(AddOrUpdateItemDto.class)))
                 .thenReturn(getItemDto);
 
@@ -157,7 +158,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateWithoutHeader() throws Exception {
+    @SneakyThrows
+    void getExceptionWithUpdateWithoutHeader() {
         mockMvc.perform(patch("/items/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -165,7 +167,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateItemWithoutName() throws Exception {
+    @SneakyThrows
+    void getExceptionWithUpdateItemWithoutName() {
         when(itemService.update(anyLong(), anyLong(), any(AddOrUpdateItemDto.class)))
                 .thenReturn(getItemDto);
 
@@ -184,7 +187,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateItemWithoutDescription() throws Exception {
+    @SneakyThrows
+    void getExceptionWithUpdateItemWithoutDescription() {
         when(itemService.update(anyLong(), anyLong(), any(AddOrUpdateItemDto.class)))
                 .thenReturn(getItemDto);
 
@@ -202,8 +206,9 @@ class ItemControllerTest {
         verify(itemService, times(1)).update(anyLong(), anyLong(), any(AddOrUpdateItemDto.class));
     }
 
+    @SneakyThrows
     @Test
-    void GetExceptionWithUpdateItemWithoutAvailable() throws Exception {
+    void getExceptionWithUpdateItemWithoutAvailable() {
         when(itemService.update(anyLong(), anyLong(), any(AddOrUpdateItemDto.class)))
                 .thenReturn(getItemDto);
 
@@ -222,7 +227,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void UpdateItem() throws Exception {
+    @SneakyThrows
+    void updateItemTest() {
         when(itemService.update(anyLong(), anyLong(), any(AddOrUpdateItemDto.class)))
                 .thenReturn(getItemDto);
 
@@ -242,7 +248,8 @@ class ItemControllerTest {
 
 
     @Test
-    void GetExceptionWithDeleteWithoutHeader() throws Exception {
+    @SneakyThrows
+    void getExceptionWithDeleteWithoutHeader() {
         mockMvc.perform(delete("/items/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -250,7 +257,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void DeleteItem() throws Exception {
+    @SneakyThrows
+    void deleteItemTest() {
         doNothing().when(itemService).delete(anyLong(), anyLong());
 
         mockMvc.perform(delete("/items/1")
@@ -261,7 +269,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllByUserIdWithoutHeader() throws Exception {
+    @SneakyThrows
+    void getExceptionWithGetAllByUserIdWithoutHeader() {
         mockMvc.perform(get("/items")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -269,7 +278,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllByUserIdWithFromLessThen0() throws Exception {
+    @SneakyThrows
+    void getExceptionWithGetAllByUserIdWithFromLessThen0() {
         mockMvc.perform(get("/items?from=-1")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -278,7 +288,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllByUserIdWithFromMoreThenMaxInt() throws Exception {
+    void getExceptionWithGetAllByUserIdWithFromMoreThenMaxInt() throws Exception {
         mockMvc.perform(get("/items?from=2147483648")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -287,7 +297,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllByUserIdWithSizeLessThen1() throws Exception {
+    void getExceptionWithGetAllByUserIdWithSizeLessThen1() throws Exception {
         mockMvc.perform(get("/items?size=0")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -296,7 +306,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllByUserIdWithSizeMoreThen20() throws Exception {
+    void getExceptionWithGetAllByUserIdWithSizeMoreThen20() throws Exception {
         mockMvc.perform(get("/items?size=21")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -305,7 +315,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetAllByUserId() throws Exception {
+    void getAllByUserId() throws Exception {
         when(itemService.getAllByUserId(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfItems);
 
@@ -323,7 +333,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetByItemIdWithoutHeader() throws Exception {
+    void getExceptionWithGetByItemIdWithoutHeader() throws Exception {
         mockMvc.perform(get("/items/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -331,7 +341,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetByItemId() throws Exception {
+    void getByItemId() throws Exception {
         when(itemService.getOneById(anyLong(), anyLong()))
                 .thenReturn(getItemDto);
 
@@ -347,7 +357,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithSearchWithoutHeader() throws Exception {
+    void getExceptionWithSearchWithoutHeader() throws Exception {
         mockMvc.perform(get("/items/search?text=kek")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -355,7 +365,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithSearchWithoutText() throws Exception {
+    void getExceptionWithSearchWithoutText() throws Exception {
         mockMvc.perform(get("/items/search")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -364,7 +374,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void GetExceptionWithSearchWithFromLessThen0() throws Exception {
+    void getExceptionWithSearchWithFromLessThen0() throws Exception {
         mockMvc.perform(get("/items/search?text=kek&from=-1")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -373,7 +383,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldGetExceptionWithSearchWithFromMoreThenMaxInt() throws Exception {
+    void getExceptionWithSearchWithFromMoreThenMaxInt() throws Exception {
         mockMvc.perform(get("/items/search?text=kek&from=2147483648")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -382,7 +392,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldGetExceptionWithSearchWithSizeLessThen1() throws Exception {
+    void getExceptionWithSearchWithSizeLessThen1() throws Exception {
         mockMvc.perform(get("/items/search?text=kek&size=0")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -391,7 +401,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldGetExceptionWithSearchWithSizeMoreThen21() throws Exception {
+    void getExceptionWithSearchWithSizeMoreThen21() throws Exception {
         mockMvc.perform(get("/items/search?text=kek&size=21")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -400,7 +410,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldSearch() throws Exception {
+    void searchTest() throws Exception {
         when(itemService.search(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listOfItems);
 
@@ -418,7 +428,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldGetExceptionWithCommentWithoutHeader() throws Exception {
+    void getExceptionWithCommentWithoutHeader() throws Exception {
         mockMvc.perform(post("/items/1/comment")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -426,7 +436,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void shouldGetExceptionWithCommentWithBlankText() throws Exception {
+    void getExceptionWithCommentWithBlankText() throws Exception {
         String jsonComment = objectMapper.writeValueAsString(commentWithBlankText);
 
         mockMvc.perform(post("/items/1/comment")

@@ -65,7 +65,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateRequestWithoutHeaderTest() {
+    void exceptionWithCreateRequestWithoutHeaderTest() {
         when(requestService.addRequest(anyLong(), any(AddItemRequestDto.class)))
                 .thenReturn(getItemRequestDto);
 
@@ -80,7 +80,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateRequestWithRequestWithBlankDescriptionTest() {
+    void exceptionWithCreateRequestWithRequestWithBlankDescriptionTest() {
         when(requestService.addRequest(anyLong(), any(AddItemRequestDto.class)))
                 .thenReturn(getItemRequestDto);
 
@@ -96,7 +96,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateRequestWithRequestWithDescriptionSize1001Test() {
+    void exceptionWithCreateRequestWithRequestWithDescriptionSize1001Test() {
         when(requestService.addRequest(anyLong(), any(AddItemRequestDto.class)))
                 .thenReturn(getItemRequestDto);
 
@@ -112,7 +112,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void CreateRequestTest() {
+    void createRequestTest() {
         when(requestService.addRequest(anyLong(), any(AddItemRequestDto.class)))
                 .thenReturn(getItemRequestDto);
 
@@ -130,7 +130,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsByUserIdWithRequestWithoutHeaderTest() {
+    void exceptionWithGetAllRequestsByUserIdWithRequestWithoutHeaderTest() {
         when(requestService.getAllRequestsByUserId(anyLong()))
                 .thenReturn(listOfRequests);
 
@@ -142,7 +142,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void GetAllRequestsByUserIdTest() {
+    void getAllRequestsByUserIdTest() {
         when(requestService.getAllRequestsByUserId(anyLong()))
                 .thenReturn(listOfRequests);
         mockMvc.perform(get("/requests")
@@ -160,7 +160,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsWithRequestWithoutHeaderTest() {
+    void exceptionWithGetAllRequestsWithRequestWithoutHeaderTest() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -172,7 +172,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsWithFromLessThen0Test() {
+    void exceptionWithGetAllRequestsWithFromLessThen0Test() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -185,7 +185,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsWithFromMoreThenMaxIntTest() {
+    void exceptionWithGetAllRequestsWithFromMoreThenMaxIntTest() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -198,7 +198,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsWithSizeLessThen1Test() {
+    void exceptionWithGetAllRequestsWithSizeLessThen1Test() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -211,7 +211,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetAllRequestsWithSizeMoreThen20Test() {
+    void exceptionWithGetAllRequestsWithSizeMoreThen20Test() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -224,7 +224,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void GetAllRequestsTest() {
+    void getAllRequestsTest() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
 
@@ -243,7 +243,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithGetRequestByIdWithRequestWithoutHeaderTest() {
+    void exceptionWithGetRequestByIdWithRequestWithoutHeaderTest() {
         when(requestService.getRequestById(anyLong(), anyLong()))
                 .thenReturn(getItemRequestDto);
         mockMvc.perform(get("/requests/1")
@@ -254,7 +254,7 @@ class ItemRequestControllerTest {
 
     @Test
     @SneakyThrows
-    void GetRequestByIdTest() {
+    void getRequestByIdTest() {
         when(requestService.getRequestById(anyLong(), anyLong()))
                 .thenReturn(getItemRequestDto);
         mockMvc.perform(get("/requests/1")

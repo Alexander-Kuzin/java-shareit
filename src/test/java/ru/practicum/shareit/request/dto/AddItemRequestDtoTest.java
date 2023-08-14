@@ -17,7 +17,7 @@ class AddItemRequestDtoTest {
 
     @Test
     @SneakyThrows
-    void SerializeTest() {
+    void serializeTest() {
         AddItemRequestDto dto = AddItemRequestDto.builder()
                 .description("requestText")
                 .build();
@@ -28,7 +28,7 @@ class AddItemRequestDtoTest {
 
     @Test
     @SneakyThrows
-    void DeserializeTest() {
+    void deserializeTest() {
         String content = "{\"description\":\"requestText\"}";
         ObjectContent<AddItemRequestDto> result = json.parse(content);
         assertThat(result).isEqualTo(AddItemRequestDto.builder()

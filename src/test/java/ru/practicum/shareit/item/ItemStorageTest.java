@@ -51,7 +51,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void CreateItem() {
+    void createItem() {
         userService.create(createUpdateUserDto);
         itemService.create(1L, createUpdateItemDto);
 
@@ -65,7 +65,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void UpdateItem() {
+    void updateItem() {
         userService.create(createUpdateUserDto);
         itemService.create(1L, createUpdateItemDto);
 
@@ -87,7 +87,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void DeleteItem() {
+    void deleteItem() {
         userService.create(createUpdateUserDto);
         itemService.create(1L, createUpdateItemDto);
 
@@ -99,7 +99,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void GetOneById() {
+    void getOneById() {
         userService.create(createUpdateUserDto);
         itemService.create(1L, createUpdateItemDto);
 
@@ -112,7 +112,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void GetAllByUserId() {
+    void getAllByUserId() {
         AddOrUpdateItemDto itemDto2 = createUpdateItemDto.toBuilder().name("name2").build();
         AddOrUpdateItemDto itemDto3 = createUpdateItemDto.toBuilder().name("name3").build();
         AddOrUpdateItemDto itemDto4 = createUpdateItemDto.toBuilder().name("name4").build();
@@ -144,7 +144,7 @@ public class ItemStorageTest {
     }
 
     @Test
-    void Search() {
+    void searchTest() {
         AddOrUpdateItemDto itemDto2 = createUpdateItemDto.toBuilder().name("name2").build();
         AddOrUpdateItemDto itemDto3 = createUpdateItemDto.toBuilder().name("name3").build();
         AddOrUpdateItemDto itemDto4 = createUpdateItemDto.toBuilder().name("name4").build();

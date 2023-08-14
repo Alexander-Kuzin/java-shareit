@@ -18,7 +18,7 @@ class GetUserDtoTest {
 
     @SneakyThrows
     @Test
-    void SerializeTest() {
+    void serializeTest() {
         GetUserDto dto = GetUserDto.builder()
                 .id(1L)
                 .name("userName")
@@ -37,7 +37,7 @@ class GetUserDtoTest {
 
     @SneakyThrows
     @Test
-    void DeserializeTest() {
+    void deserializeTest() {
         String content = "{\"id\":\"1\",\"name\":\"userName\",\"email\":\"mail@ya.ru\"}";
 
         ObjectContent<GetUserDto> result = json.parse(content);
@@ -50,7 +50,7 @@ class GetUserDtoTest {
     }
 
     @Test
-    void GetUserForGetBookingDtoTest() {
+    void getUserForGetBookingDtoTest() {
         GetUserForGetBookingDto booker = GetUserForGetBookingDto.builder()
                 .id(2L)
                 .build();

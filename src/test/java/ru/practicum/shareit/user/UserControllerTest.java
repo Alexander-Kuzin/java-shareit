@@ -119,7 +119,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithoutName() throws Exception {
+    void getExceptionWithCreateUserWithoutName() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithoutName);
 
         mockMvc.perform(post("/users")
@@ -130,7 +130,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithBlankName() throws Exception {
+    void getExceptionWithCreateUserWithBlankName() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithBlankName);
 
         mockMvc.perform(post("/users")
@@ -141,7 +141,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithoutEmail() throws Exception {
+    void getExceptionWithCreateUserWithoutEmail() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithoutEmail);
 
         mockMvc.perform(post("/users")
@@ -152,7 +152,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithWrongEmailNoName() throws Exception {
+    void getExceptionWithCreateUserWithWrongEmailNoName() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoName);
 
         mockMvc.perform(post("/users")
@@ -163,7 +163,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithWrongEmailNoDomainSecondLevel() throws Exception {
+    void getExceptionWithCreateUserWithWrongEmailNoDomainSecondLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoDomainSecondLevel);
 
         mockMvc.perform(post("/users")
@@ -174,7 +174,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithWrongEmailNoDomainFirstLevel() throws Exception {
+    void getExceptionWithCreateUserWithWrongEmailNoDomainFirstLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoDomainFirstLevel);
 
         mockMvc.perform(post("/users")
@@ -185,7 +185,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithWrongEmailNoAt() throws Exception {
+    void getExceptionWithCreateUserWithWrongEmailNoAt() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoAt);
 
         mockMvc.perform(post("/users")
@@ -197,7 +197,7 @@ class UserControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithCreateUserWithWrongEmailToShortDomainFirstLevel() {
+    void getExceptionWithCreateUserWithWrongEmailToShortDomainFirstLevel() {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailToShortDomainFirstLevel);
 
         mockMvc.perform(post("/users")
@@ -208,7 +208,8 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithCreateUserWithWrongEmailToLongDomainFirstLevel() throws Exception {
+    @SneakyThrows
+    void getExceptionWithCreateUserWithWrongEmailToLongDomainFirstLevel()  {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailToLongDomainFirstLevel);
 
         mockMvc.perform(post("/users")
@@ -219,7 +220,8 @@ class UserControllerTest {
     }
 
     @Test
-    void CreateUser() throws Exception {
+    @SneakyThrows
+    void createUserTest() {
         when(userService.create(any(AddOrUpdateUserDto.class)))
                 .thenReturn(getUserDto);
 
@@ -237,7 +239,8 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailNoName() throws Exception {
+    @SneakyThrows
+    void getExceptionWithUpdateUserWithWrongEmailNoName()  {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoName);
 
         mockMvc.perform(patch("/users/1")
@@ -248,7 +251,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailNoDomainSecondLevel() throws Exception {
+    void getExceptionWithUpdateUserWithWrongEmailNoDomainSecondLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoDomainSecondLevel);
 
         mockMvc.perform(patch("/users/1")
@@ -259,7 +262,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailNoDomainFirstLevel() throws Exception {
+    void getExceptionWithUpdateUserWithWrongEmailNoDomainFirstLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoDomainFirstLevel);
 
         mockMvc.perform(patch("/users/1")
@@ -270,7 +273,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailNoAt() throws Exception {
+    void getExceptionWithUpdateUserWithWrongEmailNoAt() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailNoAt);
 
         mockMvc.perform(patch("/users/1")
@@ -281,7 +284,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailToShortDomainFirstLevel() throws Exception {
+    void getExceptionWithUpdateUserWithWrongEmailToShortDomainFirstLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailToShortDomainFirstLevel);
 
         mockMvc.perform(patch("/users/1")
@@ -292,7 +295,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithUpdateUserWithWrongEmailToLongDomainFirstLevel() throws Exception {
+    void getExceptionWithUpdateUserWithWrongEmailToLongDomainFirstLevel() throws Exception {
         String jsonUser = objectMapper.writeValueAsString(userWithWrongEmailToLongDomainFirstLevel);
 
         mockMvc.perform(patch("/users/1")
@@ -303,7 +306,7 @@ class UserControllerTest {
     }
 
     @Test
-    void UpdateUserWithoutName() throws Exception {
+    void updateUserWithoutName() throws Exception {
         when(userService.update(anyLong(), any(AddOrUpdateUserDto.class)))
                 .thenReturn(getUserDto);
 
@@ -320,7 +323,7 @@ class UserControllerTest {
     }
 
     @Test
-    void UpdateUserWithoutEmail() throws Exception {
+    void updateUserWithoutEmail() throws Exception {
         when(userService.update(anyLong(), any(AddOrUpdateUserDto.class)))
                 .thenReturn(getUserDto);
 
@@ -337,7 +340,7 @@ class UserControllerTest {
     }
 
     @Test
-    void UpdateUser() throws Exception {
+    void updateUser() throws Exception {
         when(userService.update(anyLong(), any(AddOrUpdateUserDto.class)))
                 .thenReturn(getUserDto);
 
@@ -354,7 +357,7 @@ class UserControllerTest {
     }
 
     @Test
-    void DeleteUser() throws Exception {
+    void deleteUserTest() throws Exception {
         doNothing().when(userService).deleteById(anyLong());
 
         mockMvc.perform(delete("/users/1")
@@ -363,7 +366,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetById() throws Exception {
+    void getById() throws Exception {
         when(userService.getById(anyLong()))
                 .thenReturn(getUserDto);
 
@@ -377,7 +380,7 @@ class UserControllerTest {
     }
 
     @Test
-    void GetExceptionWithGetAllWithFromLessThen0() throws Exception {
+    void getExceptionWithGetAllWithFromLessThen0() throws Exception {
         mockMvc.perform(get("/users?from=-1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

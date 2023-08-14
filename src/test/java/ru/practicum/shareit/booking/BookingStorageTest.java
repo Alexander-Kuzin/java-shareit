@@ -69,7 +69,7 @@ public class BookingStorageTest {
     }
 
     @Test
-    void CreateBookingTest() {
+    void createBookingTest() {
         userService.create(userDto);
         userService.create(userDto2);
         itemService.create(1L, itemDto);
@@ -84,7 +84,7 @@ public class BookingStorageTest {
     }
 
     @Test
-    void ApproveBookingTest() {
+    void approveBookingTest() {
         userService.create(userDto);
         userService.create(userDto2);
         itemService.create(1L, itemDto);
@@ -100,7 +100,7 @@ public class BookingStorageTest {
     }
 
     @Test
-    void GetBookingByUserOwnerTest() {
+    void getBookingByUserOwnerTest() {
         userService.create(userDto);
         userService.create(userDto2);
         itemService.create(1L, itemDto);
@@ -115,7 +115,7 @@ public class BookingStorageTest {
     }
 
     @Test
-    void GetUserBookingsTest() {
+    void getUserBookingsTest() {
         userService.create(userDto);
         userService.create(userDto2);
         itemService.create(1L, itemDto);
@@ -137,7 +137,7 @@ public class BookingStorageTest {
     }
 
     @Test
-    void GetOwnerBookingsTest() {
+    void getOwnerBookingsTest() {
         userService.create(userDto);
         userService.create(userDto2);
         itemService.create(1L, itemDto);

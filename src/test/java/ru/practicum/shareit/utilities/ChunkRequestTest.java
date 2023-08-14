@@ -17,20 +17,20 @@ class ChunkRequestTest {
 
 
     @Test
-    void GetCorrectPageNumber() {
+    void getCorrectPageNumber() {
         ChunkRequest pageRequest = new ChunkRequest(10, 5);
         assertEquals(0, pageRequest.getPageNumber());
     }
 
 
     @Test
-    void GetCorrectToString() {
+    void getCorrectToString() {
         ChunkRequest pageRequest = new ChunkRequest(10, 5);
         assertEquals(pageRequest.toString(), pageRequest.toString());
     }
 
     @Test
-    void GetCorrectHashCode() {
+    void getCorrectHashCode() {
         ChunkRequest pageRequest = new ChunkRequest(10, 5);
         assertEquals(pageRequest.hashCode(), pageRequest.hashCode());
     }

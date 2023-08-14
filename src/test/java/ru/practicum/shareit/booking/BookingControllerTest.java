@@ -124,7 +124,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateBookingWithoutHeaderTest() {
+    void exceptionWithCreateBookingWithoutHeaderTest() {
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -133,7 +133,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateBookingWithStartInPastTest() {
+    void exceptionWithCreateBookingWithStartInPastTest() {
         String jsonBooking = objectMapper.writeValueAsString(createBookingDtoWithStartInPast);
 
         mockMvc.perform(post("/bookings")
@@ -146,7 +146,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateBookingWithEndInPastTest() {
+    void exceptionWithCreateBookingWithEndInPastTest() {
         String jsonBooking = objectMapper.writeValueAsString(createBookingDtoWithEndInPast);
 
         mockMvc.perform(post("/bookings")
@@ -159,7 +159,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateBookingWithoutStartTest() {
+    void exceptionWithCreateBookingWithoutStartTest() {
         String jsonBooking = objectMapper.writeValueAsString(createBookingDtoWithoutStart);
 
         mockMvc.perform(post("/bookings")
@@ -172,7 +172,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithCreateBookingWithoutEndTest() {
+    void exceptionWithCreateBookingWithoutEndTest() {
         String jsonBooking = objectMapper.writeValueAsString(createBookingDtoWithoutEnd);
 
         mockMvc.perform(post("/bookings")
@@ -185,7 +185,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithCreateBookingWithoutItemId() {
+    void getExceptionWithCreateBookingWithoutItemId() {
         String jsonBooking = objectMapper.writeValueAsString(createBookingDtoWithoutItemId);
 
         mockMvc.perform(post("/bookings")
@@ -198,7 +198,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void AddBookingTest() {
+    void addBookingTest() {
         when(bookingService.create(anyLong(), any(AddBookingDto.class)))
                 .thenReturn(getBookingDto);
 
@@ -223,7 +223,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithApproveBookingWithoutHeaderTest() {
+    void exceptionWithApproveBookingWithoutHeaderTest() {
         mockMvc.perform(patch("/bookings/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -232,7 +232,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ExceptionWithApproveBookingWithWrongApproveTest() {
+    void exceptionWithApproveBookingWithWrongApproveTest() {
         mockMvc.perform(patch("/bookings/1?approve=kek")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -244,7 +244,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void ApproveBookingTest() {
+    void approveBookingTest() {
         when(bookingService.approveBooking(anyLong(), anyLong(), anyBoolean()))
                 .thenReturn(getBookingDto);
 
@@ -266,7 +266,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void RejectBookingTest() {
+    void rejectBookingTest() {
         when(bookingService.approveBooking(anyLong(), anyLong(), anyBoolean()))
                 .thenReturn(getBookingDto);
 
@@ -288,7 +288,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetBookingByUserOwnerWithoutHeaderTest() {
+    void getExceptionWithGetBookingByUserOwnerWithoutHeaderTest() {
         mockMvc.perform(get("/bookings/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -297,7 +297,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetBookingByUserOwnerTest() {
+    void getBookingWithGetBookingByUserOwnerTest() {
         when(bookingService.getBookingByUserOwner(anyLong(), anyLong()))
                 .thenReturn(getBookingDto);
 
@@ -319,7 +319,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithoutHeader() {
+    void getExceptionWithGetUserBookingsWithoutHeader() {
         mockMvc.perform(get("/bookings")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -328,7 +328,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithWrongState() {
+    void getExceptionWithGetUserBookingsWithWrongState() {
         mockMvc.perform(get("/bookings?state=kek")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -339,7 +339,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithFromLessThen0() {
+    void getExceptionWithGetUserBookingsWithFromLessThen0() {
         mockMvc.perform(get("/bookings?from=-1")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -349,7 +349,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithFromMoreThenMaxInt() {
+    void getExceptionWithGetUserBookingsWithFromMoreThenMaxInt() {
         mockMvc.perform(get("/bookings?from=2147483648")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -359,7 +359,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithSizeLessThen1() {
+    void getExceptionWithGetUserBookingsWithSizeLessThen1() {
         mockMvc.perform(get("/bookings?size=0")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -369,7 +369,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetUserBookingsWithSizeMoreThen20() {
+    void getExceptionWithGetUserBookingsWithSizeMoreThen20() {
         mockMvc.perform(get("/bookings?size=21")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -379,7 +379,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookings() {
+    void getBookingWithGetUserBookings() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -398,7 +398,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStateALL() {
+    void getBookingWithGetUserBookingsWithStateALL() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -417,7 +417,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStateCURRENT() {
+    void getBookingWithGetUserBookingsWithStateCURRENT() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -436,7 +436,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStatePAST() {
+    void getBookingWithGetUserBookingsWithStatePAST() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -455,7 +455,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStateFUTURE() {
+    void getBookingWithGetUserBookingsWithStateFUTURE() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -474,7 +474,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStateWAITING() {
+    void getBookingWithGetUserBookingsWithStateWAITING() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -493,7 +493,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetUserBookingsWithStateREJECTED() {
+    void getBookingWithGetUserBookingsWithStateREJECTED() {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -512,7 +512,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithoutHeader() {
+    void getExceptionWithGetOwnerBookingsWithoutHeader() {
         mockMvc.perform(get("/bookings/owner")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -521,7 +521,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithWrongState() {
+    void getExceptionWithGetOwnerBookingsWithWrongState() {
         mockMvc.perform(get("/bookings/owner?state=kek")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -532,7 +532,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithFromLessThen0() {
+    void getExceptionWithGetOwnerBookingsWithFromLessThen0() {
         mockMvc.perform(get("/bookings/owner?from=-1")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -542,7 +542,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithFromMoreThenMaxInt() {
+    void getExceptionWithGetOwnerBookingsWithFromMoreThenMaxInt() {
         mockMvc.perform(get("/bookings/owner?from=2147483648")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -552,7 +552,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithSizeLessThen1() {
+    void getExceptionWithGetOwnerBookingsWithSizeLessThen1() {
         mockMvc.perform(get("/bookings/owner?size=0")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -562,7 +562,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetExceptionWithGetOwnerBookingsWithFromMoreThen20() {
+    void getExceptionWithGetOwnerBookingsWithFromMoreThen20() {
         mockMvc.perform(get("/bookings/owner?size=21")
                         .header(REQUEST_HEADER_USER_ID, booker.getId())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -572,7 +572,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookings() {
+    void getBookingWithGetOwnerBookings() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -591,7 +591,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStateALL() {
+    void getBookingWithGetOwnerBookingsWithStateALL() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -610,7 +610,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStateCURRENT() {
+    void getBookingWithGetOwnerBookingsWithStateCURRENT() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -629,7 +629,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStatePAST() {
+    void getBookingWithGetOwnerBookingsWithStatePAST() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -648,7 +648,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStateFUTURE() {
+    void getBookingWithGetOwnerBookingsWithStateFUTURE() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -667,7 +667,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStateWAITING() {
+    void getBookingWithGetOwnerBookingsWithStateWAITING() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 
@@ -686,7 +686,7 @@ class BookingControllerTest {
 
     @Test
     @SneakyThrows
-    void GetBookingWithGetOwnerBookingsWithStateREJECTED() {
+    void getBookingWithGetOwnerBookingsWithStateREJECTED() {
         when(bookingService.getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt()))
                 .thenReturn(listWith20Bookings);
 

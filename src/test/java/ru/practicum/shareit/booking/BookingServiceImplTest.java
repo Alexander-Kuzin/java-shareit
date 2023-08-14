@@ -115,7 +115,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void CreateBookingTest() {
+    void createBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(itemStorage.findById(anyLong()))
@@ -137,7 +137,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionCreateBookingNotFoundUserTest() {
+    void getExceptionCreateBookingNotFoundUserTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(itemStorage.findById(anyLong()))
@@ -157,7 +157,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionCreateBookingNotFoundItemTest() {
+    void getExceptionCreateBookingNotFoundItemTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(itemStorage.findById(anyLong()))
@@ -177,7 +177,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionCreateBookingNotValidDateExceptionTest() {
+    void getExceptionCreateBookingNotValidDateExceptionTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(itemStorage.findById(anyLong()))
@@ -197,7 +197,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionCreateBookingNotAvailableExceptionTest() {
+    void getExceptionCreateBookingNotAvailableExceptionTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(itemStorage.findById(anyLong()))
@@ -217,7 +217,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionCreateBookingNotFoundSelfItemTest() {
+    void getExceptionCreateBookingNotFoundSelfItemTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(itemStorage.findById(anyLong()))
@@ -237,7 +237,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void ApproveBookingTest() {
+    void approveBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -259,7 +259,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void RejectBookingTest() {
+    void rejectBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -281,7 +281,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithApproveBookingNoFoundUserTest() {
+    void getExceptionWithApproveBookingNoFoundUserTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(bookingStorage.findById(anyLong()))
@@ -301,7 +301,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithApproveBookingNoFoundBookingTest() {
+    void getExceptionWithApproveBookingNoFoundBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -321,7 +321,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithApproveBookingNoFoundOwnerTest() {
+    void getExceptionWithApproveBookingNoFoundOwnerTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -341,7 +341,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithApproveBookingNotAvailableAlreadyApprovedTest() {
+    void getExceptionWithApproveBookingNotAvailableAlreadyApprovedTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -361,7 +361,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetBookingByUserOwnerItemTest() {
+    void getBookingByUserOwnerItemTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -380,7 +380,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetBookingByUserOwnerBookingTest() {
+    void getBookingByUserOwnerBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -399,7 +399,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetBookingByUserOwnerNotFoundUserTest() {
+    void getExceptionWithGetBookingByUserOwnerNotFoundUserTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(bookingStorage.findById(anyLong()))
@@ -416,7 +416,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetBookingByUserOwnerNotFoundBookingTest() {
+    void getExceptionWithGetBookingByUserOwnerNotFoundBookingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -433,7 +433,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetBookingByUserOwnerNotFoundOwnerTest() {
+    void getExceptionWithGetBookingByUserOwnerNotFoundOwnerTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findById(anyLong()))
@@ -450,7 +450,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithAllTest() {
+    void getUserBookingsWithAllTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBooker(any(User.class), any(Pageable.class)))
@@ -467,7 +467,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetUserBookingsWithAllTest() {
+    void getExceptionWithGetUserBookingsWithAllTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(bookingStorage.findAllByBooker(any(User.class), any(Pageable.class)))
@@ -484,7 +484,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithCurrentTest() {
+    void getUserBookingsWithCurrentTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBookerAndCurrent(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -501,7 +501,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithPastTest() {
+    void getUserBookingsWithPastTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBookerAndPast(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -518,7 +518,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithFutureTest() {
+    void getUserBookingsWithFutureTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBookerAndFuture(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -535,7 +535,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithWaitingTest() {
+    void getUserBookingsWithWaitingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBookerAndStatus(any(User.class), any(Status.class), any(Pageable.class)))
@@ -552,7 +552,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetUserBookingsWithRejectTest() {
+    void getUserBookingsWithRejectTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByBookerAndStatus(any(User.class), any(Status.class), any(Pageable.class)))
@@ -569,7 +569,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithAllTest() {
+    void getOwnerBookingsWithAllTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwner(any(User.class), any(Pageable.class)))
@@ -586,7 +586,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetExceptionWithGetOwnerBookingsWithAllTest() {
+    void getExceptionWithGetOwnerBookingsWithAllTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
         when(bookingStorage.findAllByBooker(any(User.class), any(Pageable.class)))
@@ -603,7 +603,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithCurrentTest() {
+    void getOwnerBookingsWithCurrentTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwnerAndCurrent(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -620,7 +620,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithPastTest() {
+    void getOwnerBookingsWithPastTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwnerAndPast(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -637,7 +637,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithFutureTest() {
+    void getOwnerBookingsWithFutureTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwnerAndFuture(any(User.class), any(LocalDateTime.class), any(Pageable.class)))
@@ -654,7 +654,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithWaitingTest() {
+    void getOwnerBookingsWithWaitingTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwnerAndStatus(any(User.class), any(Status.class), any(Pageable.class)))
@@ -671,7 +671,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void GetOwnerBookingsWithRejectTest() {
+    void getOwnerBookingsWithRejectTest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(user));
         when(bookingStorage.findAllByItemOwnerAndStatus(any(User.class), any(Status.class), any(Pageable.class)))

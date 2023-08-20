@@ -7,7 +7,7 @@ import ru.practicum.shareit.booking.dto.GetItemBookingDto;
 import java.util.SortedSet;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 public class GetItemDto {
     private Long id;
     private String name;
@@ -16,4 +16,5 @@ public class GetItemDto {
     private GetItemBookingDto lastBooking;
     private GetItemBookingDto nextBooking;
     private SortedSet<GetCommentDto> comments;
+    private Long requestId;
 }

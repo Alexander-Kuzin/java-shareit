@@ -2,16 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.AddCommentDto;
 import ru.practicum.shareit.item.dto.AddOrUpdateItemDto;
 import ru.practicum.shareit.item.dto.GetCommentDto;
@@ -20,6 +11,8 @@ import ru.practicum.shareit.markers.Marker.OnCreate;
 import ru.practicum.shareit.markers.Marker.OnUpdate;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 import static ru.practicum.shareit.utilities.Constants.REQUEST_HEADER_USER_ID;
@@ -32,8 +25,12 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping
-    public List<GetItemDto> getAllByUserId(@RequestHeader(REQUEST_HEADER_USER_ID) long userId) {
-        return itemService.getAllByUserId(userId);
+    public List<GetItemDto> getAllByUserId(@RequestHeader(REQUEST_HEADER_USER_ID) long userId,
+                                           @RequestParam(defaultValue = "0")
+                                           @Min(0) @Max(Integer.MAX_VALUE) int from,
+                                           @RequestParam(defaultValue = "20")
+                                           @Min(1) @Max(20) int size) {
+        return itemService.getAllByUserId(userId, from, size);
     }
 
     @GetMapping("/{itemId}")
@@ -65,8 +62,12 @@ public class ItemController {
 
     @GetMapping("/search")
     public List<GetItemDto> search(@RequestHeader(REQUEST_HEADER_USER_ID) long userId,
-                                   @RequestParam String text) {
-        return itemService.search(userId, text);
+                                   @RequestParam String text,
+                                   @RequestParam(defaultValue = "0")
+                                   @Min(0) @Max(Integer.MAX_VALUE) int from,
+                                   @RequestParam(defaultValue = "20")
+                                   @Min(1) @Max(20) int size) {
+        return itemService.search(userId, text, from, size);
     }
 
     @PostMapping("/{itemId}/comment")

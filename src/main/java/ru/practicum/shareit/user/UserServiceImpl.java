@@ -2,7 +2,9 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import ru.practicum.shareit.mappers.UserMapper;
 import ru.practicum.shareit.user.dto.AddOrUpdateUserDto;
 import ru.practicum.shareit.user.dto.GetUserDto;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.utilities.ChunkRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<GetUserDto> getAll() {
-        return userStorage.findAll(SORT_BY_ID_ASC)
+    public List<GetUserDto> getAll(int from, int size) {
+        Pageable pageable = new ChunkRequest(from, size, SORT_BY_ID_ASC);
+        return userStorage.findAll(pageable)
+                .getContent()
                 .stream()
                 .map(UserMapper::toGetUserDtoFromUser)
                 .collect(Collectors.toList());
@@ -56,12 +61,11 @@ public class UserServiceImpl implements UserService {
     public GetUserDto update(long id, AddOrUpdateUserDto createUpdateUserDto) {
         User user = userStorage.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("User with ID %s", id)));
-
-        if (createUpdateUserDto.getName() != null && !createUpdateUserDto.getName().isBlank()) {
+        if (StringUtils.isNotBlank(createUpdateUserDto.getName())) {
             user.setName(createUpdateUserDto.getName());
         }
 
-        if (createUpdateUserDto.getEmail() != null && !createUpdateUserDto.getEmail().isBlank()) {
+        if (StringUtils.isNotBlank(createUpdateUserDto.getEmail())) {
             user.setEmail(createUpdateUserDto.getEmail());
         }
 

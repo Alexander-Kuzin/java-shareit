@@ -21,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=root
       - DB_HOST=db
       - DB_PORT=5432
-      - TZ=Europe/Moscow
+  #    - TZ=Europe/Moscow
 
   db:
     image: postgres:13.7-alpine
@@ -30,7 +30,7 @@ services:
       - "6541:5432"
 
     environment:
-      - TZ=Europe/Moscow
+   #   - TZ=Europe/Moscow
       - POSTGRES_DB=shareit
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root

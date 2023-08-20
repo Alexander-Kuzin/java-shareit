@@ -7,7 +7,4 @@ import lombok.Data;
 @Builder
 public class GetBookingUserDto {
     private Long id;
-    //TODO
-    // review comments
-    // unit - tests!
 }

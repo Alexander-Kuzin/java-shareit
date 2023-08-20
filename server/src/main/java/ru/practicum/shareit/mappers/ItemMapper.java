@@ -24,7 +24,7 @@ public class ItemMapper {
                     .stream()
                     .map(CommentMapper::toGetCommentDtoFromComment)
                     .collect(Collectors.toSet()));
-        } //fixme Item.java init
+        }
 
         return GetItemDto.builder()
                 .id(item.getId())

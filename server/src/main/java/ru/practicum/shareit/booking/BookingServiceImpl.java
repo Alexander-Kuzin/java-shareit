@@ -43,7 +43,6 @@ public class BookingServiceImpl implements BookingService {
                 () -> new EntityNotFoundException(String.format("User with ID %s", userId)));
         State state = State.valueOf(stateString.toUpperCase());
         LocalDateTime currentMoment = LocalDateTime.now();
-//        List<Booking> bookings;
         Page<Booking> bookings;
 
         Pageable pageable = new ChunkRequest(from, size, Constants.SORT_BY_START_DATE_DESC);
@@ -84,7 +83,6 @@ public class BookingServiceImpl implements BookingService {
         State state = State.valueOf(stateString.toUpperCase());
         LocalDateTime currentMoment = LocalDateTime.now();
         Page<Booking> bookings;
-//        List<Booking> bookings;
 
         Pageable pageable = new ChunkRequest(from, size, Constants.SORT_BY_START_DATE_DESC);
 

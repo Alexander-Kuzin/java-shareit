@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.practicum.shareit.request.dto.AddItemRequestDto;
 
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
 
 import static ru.practicum.shareit.utilities.Constants.REQUEST_HEADER_USER_ID;
 

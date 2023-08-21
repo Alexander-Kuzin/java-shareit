@@ -199,7 +199,6 @@ class BookingControllerTest {
         verify(bookingService, times(1)).getBookingByUserOwner(anyLong(), anyLong());
     }
 
-
     @Test
     @SneakyThrows
     void testGetExceptionWithGetUserBookingsWithoutHeader() {
@@ -255,4 +254,5 @@ class BookingControllerTest {
                 .andExpect(jsonPath("$.[19].id").value(21L));
         verify(bookingService, times(1)).getOwnerBookings(anyLong(), anyString(), anyInt(), anyInt());
     }
+
 }

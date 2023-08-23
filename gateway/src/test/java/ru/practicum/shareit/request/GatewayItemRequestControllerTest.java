@@ -72,12 +72,10 @@ class GatewayItemRequestControllerTest {
     void exceptionWithGetAllRequestsWithSizeMoreThen20Test() {
         when(requestService.getAllRequests(anyLong(), anyInt(), anyInt()))
                 .thenReturn(listOfRequests);
-
         mockMvc.perform(get("/requests/all?size=21")
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-//                .andExpect(status().isBadRequest());
         verify(requestService, never()).getAllRequests(anyLong(), anyInt(), anyInt());
     }
 

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.user.dto.AddOrUpdateUserDto;
 import ru.practicum.shareit.user.dto.GetUserDto;
+
 import java.util.ArrayList;
 import java.util.List;
 

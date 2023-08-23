@@ -11,13 +11,13 @@
 
     <groupId>ru.practicum</groupId>
     <artifactId>shareit</artifactId>
-    <version>16.1</version>
+    <version>16.2</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>common</module>
-        <module>gateway</module>
         <module>server</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

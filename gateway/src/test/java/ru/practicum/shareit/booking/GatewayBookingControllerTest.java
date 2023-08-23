@@ -37,7 +37,7 @@ class GatewayBookingControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private BookingServiceImpl bookingService;
+    private BookingService bookingService;
     @MockBean
     private GatewayBookingController gatewayBookingController;
     private static GetUserForGetBookingDto booker;

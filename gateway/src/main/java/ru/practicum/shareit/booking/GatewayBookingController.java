@@ -4,7 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.shareit.annotations.StartBeforeEndDateValid;
 import ru.practicum.shareit.annotations.ValuesAllowedConstraint;
 import ru.practicum.shareit.booking.dto.AddBookingDto;
@@ -39,7 +46,9 @@ public class GatewayBookingController {
                                                   @RequestParam(defaultValue = "20")
                                                   @Min(1) @Max(20) int size) {
 
-        return client.getUserBookings(userId, state, from, size);
+        return
+                client
+                        .getUserBookings(userId, state, from, size);
     }
 
     @GetMapping("/owner")

@@ -77,7 +77,6 @@ class GatewayItemRequestControllerTest {
                         .header(REQUEST_HEADER_USER_ID, "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-//                .andExpect(status().isBadRequest());
         verify(requestService, never()).getAllRequests(anyLong(), anyInt(), anyInt());
     }
 
